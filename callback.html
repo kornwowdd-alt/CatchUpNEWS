@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OAuth Callback — Panda Creator Studio</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: #0f172a;
+      color: #f8fafc;
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 720px;
+      margin: 3rem auto;
+      padding: 2rem;
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 12px;
+    }
+    h1 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+    .code-box {
+      background: #090d16;
+      border: 1px solid #334155;
+      padding: 1rem;
+      border-radius: 8px;
+      font-family: monospace;
+      word-break: break-all;
+      color: #25f4ee;
+      margin: 0.75rem 0 1.25rem;
+    }
+    .btn {
+      display: inline-block;
+      padding: 0.65rem 1.25rem;
+      border-radius: 8px;
+      background: #fe2c55;
+      color: #fff;
+      font-weight: 600;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      margin-right: 0.5rem;
+    }
+    .btn-secondary {
+      background: #334155;
+    }
+    .error {
+      color: #f87171;
+      background: rgba(248, 113, 113, 0.1);
+      border: 1px solid #f87171;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>TikTok OAuth 2.0 Authorization Callback</h1>
+    <p id="statusText" style="color:#94a3b8;">Processing response from TikTok Login Kit...</p>
+
+    <div id="errorBox" class="error" style="display:none;"></div>
+
+    <div id="resultSection" style="display:none;">
+      <label style="font-weight:600;font-size:0.9rem;">Authorization Code (<code>code</code>):</label>
+      <div class="code-box" id="authCodeBox"></div>
+
+      <label style="font-weight:600;font-size:0.9rem;">Granted Scopes:</label>
+      <div class="code-box" id="scopesBox" style="color:#cbd5e1;"></div>
+
+      <p style="font-size:0.85rem;color:#94a3b8;margin-bottom:1.25rem;">
+        Copy the <strong>Authorization Code</strong> above to exchange it for your <code>access_token</code> and <code>refresh_token</code> via <code>POST https://open.tiktokapis.com/v2/oauth/token/</code>, or return to the studio dashboard.
+      </p>
+
+      <button class="btn" onclick="copyAuthCode()">Copy Auth Code</button>
+      <a href="index.html" class="btn btn-secondary">Return to Dashboard</a>
+    </div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get('code');
+    const scopes = params.get('scopes');
+    const error = params.get('error');
+    const errorDesc = params.get('error_description');
+
+    const statusText = document.getElementById('statusText');
+    const errorBox = document.getElementById('errorBox');
+    const resultSection = document.getElementById('resultSection');
+
+    if (error) {
+      statusText.textContent = 'Authorization failed.';
+      errorBox.style.display = 'block';
+      errorBox.innerHTML = `<strong>Error:</strong> ${error}<br/>${errorDesc || ''}`;
+    } else if (code) {
+      statusText.textContent = 'Authorization successful! Your TikTok authorization code is ready:';
+      resultSection.style.display = 'block';
+      document.getElementById('authCodeBox').textContent = code;
+      document.getElementById('scopesBox').textContent = scopes || 'user.info.basic, video.publish, video.upload';
+    } else {
+      statusText.textContent = 'No authorization code found in URL parameters. Make sure you initiated the login from the Dashboard.';
+      resultSection.style.display = 'block';
+      document.getElementById('authCodeBox').textContent = '(Waiting for ?code=... from TikTok OAuth redirect)';
+      document.getElementById('scopesBox').textContent = '-';
+    }
+
+    function copyAuthCode() {
+      if (!code) return;
+      navigator.clipboard.writeText(code);
+      alert('Copied Authorization Code to clipboard!');
+    }
+  </script>
+</body>
+</html>
