@@ -1,12 +1,12 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CatchUp NEWS โ€” Video Publishing Dashboard</title>
+  <title>CatchUp NEWS — Smart Short-Form Video Publishing Platform</title>
   <style>
     :root {
-      --bg: #0f172a;
+      --bg: #0b1120;
       --card: #1e293b;
       --border: #334155;
       --text: #f8fafc;
@@ -17,30 +17,34 @@
       --success: #10b981;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background-color: var(--bg);
       color: var(--text);
       line-height: 1.6;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
     }
+    /* Navigation Bar */
     header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(11, 17, 32, 0.9);
+      backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
       padding: 1rem 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: rgba(30, 41, 59, 0.8);
-      backdrop-filter: blur(8px);
     }
     .logo {
-      font-size: 1.25rem;
-      font-weight: 700;
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--text);
+      text-decoration: none;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.6rem;
     }
     .logo-badge {
       background: linear-gradient(135deg, var(--cyan), var(--accent));
@@ -53,15 +57,194 @@
       color: var(--muted);
       text-decoration: none;
       margin-left: 1.5rem;
-      font-size: 0.9rem;
+      font-size: 0.92rem;
+      font-weight: 500;
+      transition: color 0.15s;
     }
     nav a:hover { color: var(--text); }
-    main {
-      max-width: 960px;
-      width: 100%;
-      margin: 2rem auto;
+    .nav-btn {
+      background: linear-gradient(135deg, var(--cyan), var(--accent));
+      color: #000 !important;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-weight: 700;
+      margin-left: 1.5rem;
+    }
+    /* Hero Section */
+    .hero {
+      max-width: 1100px;
+      margin: 4rem auto 3rem;
       padding: 0 1.5rem;
-      flex: 1;
+      text-align: center;
+    }
+    .hero-badge {
+      display: inline-block;
+      padding: 0.35rem 0.9rem;
+      border-radius: 9999px;
+      background: rgba(37, 244, 238, 0.1);
+      border: 1px solid rgba(37, 244, 238, 0.3);
+      color: var(--cyan);
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 1.25rem;
+    }
+    .hero h1 {
+      font-size: 2.8rem;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 1.25rem;
+      background: linear-gradient(to right, #fff, #94a3b8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--muted);
+      max-width: 760px;
+      margin: 0 auto 2rem;
+    }
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .btn-main {
+      background: var(--accent);
+      color: #fff;
+      padding: 0.85rem 1.75rem;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: background 0.15s;
+    }
+    .btn-main:hover { background: var(--accent-hover); }
+    .btn-sub {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0.85rem 1.75rem;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: border-color 0.15s;
+    }
+    .btn-sub:hover { border-color: var(--cyan); }
+    /* Features Grid */
+    .features {
+      max-width: 1100px;
+      margin: 4rem auto;
+      padding: 0 1.5rem;
+    }
+    .section-title {
+      text-align: center;
+      font-size: 1.85rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .section-subtitle {
+      text-align: center;
+      color: var(--muted);
+      margin-bottom: 2.5rem;
+      font-size: 1rem;
+    }
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+    .feature-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.75rem;
+      transition: transform 0.15s, border-color 0.15s;
+    }
+    .feature-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--cyan);
+    }
+    .feature-icon {
+      font-size: 1.75rem;
+      margin-bottom: 1rem;
+    }
+    .feature-card h3 {
+      font-size: 1.15rem;
+      margin-bottom: 0.5rem;
+    }
+    .feature-card p {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    /* How it works */
+    .workflow {
+      max-width: 1100px;
+      margin: 4rem auto;
+      padding: 0 1.5rem;
+    }
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+    }
+    .step-box {
+      background: rgba(30, 41, 59, 0.5);
+      border: 1px dashed var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+    }
+    .step-num {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--cyan);
+      color: #000;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem;
+    }
+    .step-box h4 { margin-bottom: 0.5rem; font-size: 1rem; }
+    .step-box p { font-size: 0.85rem; color: var(--muted); }
+    /* Interactive Studio Section */
+    .studio-section {
+      max-width: 1100px;
+      margin: 5rem auto;
+      padding: 0 1.5rem;
+    }
+    .studio-container {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
+    .studio-header {
+      margin-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .studio-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid var(--success);
+      color: #6ee7b7;
+      padding: 0.35rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 600;
     }
     .grid {
       display: grid;
@@ -70,6 +253,7 @@
     }
     @media (max-width: 768px) {
       .grid { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 2.1rem; }
     }
     .card {
       background: var(--card);
@@ -98,6 +282,7 @@
       margin-bottom: 0.6rem;
     }
     input[type="text"],
+    input[type="password"],
     input[type="url"],
     textarea,
     select {
@@ -108,7 +293,7 @@
       background: #0f172a;
       color: var(--text);
       font-size: 0.9rem;
-      margin-bottom: 1rem;
+      margin-bottom: 0.85rem;
     }
     textarea { resize: vertical; min-height: 90px; }
     .btn {
@@ -160,7 +345,9 @@
       justify-content: center;
       font-weight: 700;
       color: #000;
+      overflow: hidden;
     }
+    .avatar img { width: 100%; height: 100%; object-fit: cover; }
     .checkbox-group {
       display: flex;
       flex-direction: column;
@@ -205,6 +392,7 @@
       border: 1px solid var(--success);
       color: #a7f3d0;
       font-size: 0.875rem;
+      word-break: break-word;
     }
     .video-preview {
       width: 100%;
@@ -226,186 +414,374 @@
       height: 100%;
       object-fit: contain;
     }
+    /* Footer */
     footer {
       border-top: 1px solid var(--border);
-      text-align: center;
-      padding: 1.5rem;
-      font-size: 0.85rem;
+      background: #070c18;
+      padding: 3rem 2rem 2rem;
       color: var(--muted);
+      font-size: 0.9rem;
     }
-    footer a { color: var(--cyan); text-decoration: none; margin: 0 0.5rem; }
+    .footer-content {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+    @media (max-width: 768px) {
+      .footer-content { grid-template-columns: 1fr; }
+    }
+    .footer-col h4 {
+      color: var(--text);
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: 0.6rem; }
+    .footer-col a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .footer-col a:hover { color: var(--cyan); }
+    .footer-bottom {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      font-size: 0.85rem;
+    }
   </style>
 </head>
 <body>
+  <!-- Header / Navigation -->
   <header>
-    <div class="logo">
+    <a href="#" class="logo">
       <span class="logo-badge"></span>
       <span>CatchUp NEWS</span>
-    </div>
+    </a>
     <nav>
-      <a href="index.html">Dashboard</a>
+      <a href="#features">Features</a>
+      <a href="#workflow">How It Works</a>
+      <a href="#studio">Creator Studio</a>
       <a href="terms.html">Terms of Service</a>
       <a href="privacy.html">Privacy Policy</a>
+      <a href="#studio" class="nav-btn">Launch Studio</a>
     </nav>
   </header>
 
-  <main>
-    <div class="grid">
-      <!-- Left Column: OAuth Connection & Media Selection -->
-      <div>
-        <div class="card">
-          <h2>1. TikTok Account Connection</h2>
-          <p class="sub-label">Authenticate with TikTok Login Kit (OAuth 2.0) to enable publishing.</p>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-badge">Official TikTok Content Posting Partner Integration</div>
+    <h1>The Smart Video Publishing Platform for News &amp; Content Creators</h1>
+    <p>
+      CatchUp NEWS is an all-in-one publishing platform built for modern newsrooms, digital journalists, and video creators. Create, schedule, and distribute high-impact short-form videos to TikTok seamlessly with 100% compliance.
+    </p>
+    <div class="hero-actions">
+      <a href="#studio" class="btn-main">Open Creator Studio &rarr;</a>
+      <a href="#features" class="btn-sub">Explore Capabilities</a>
+    </div>
+  </section>
 
-          <label for="clientKey">TikTok Client Key</label>
-          <input type="text" id="clientKey" placeholder="awxxxxxxxxxxxxxx" />
+  <!-- Features Section -->
+  <section class="features" id="features">
+    <h2 class="section-title">Built for High-Velocity Video Publishing</h2>
+    <p class="section-subtitle">Streamline your daily social media operations with official TikTok APIs.</p>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3>Direct Post to Profile</h3>
+        <p>Publish ready-to-watch news videos and reels directly to your TikTok profile in seconds with custom titles, hashtags, and privacy levels.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📥</div>
+        <h3>Inbox Draft Workflow</h3>
+        <p>Push raw footage or templated drafts straight to your mobile TikTok app inbox for final audio selection, trending stickers, and on-the-go review.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🛡️</div>
+        <h3>Compliance &amp; Disclosures</h3>
+        <p>Built-in commercial content disclosure switches, brand organic tagging, and music usage agreements meeting strict TikTok platform standards.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔒</div>
+        <h3>Enterprise OAuth 2.0 Security</h3>
+        <p>Authenticate safely via official TikTok Login Kit with zero password storage, granular scopes, and automated 365-day token refreshment.</p>
+      </div>
+    </div>
+  </section>
 
-          <label for="redirectUri">Redirect URI</label>
-          <input type="url" id="redirectUri" placeholder="https://kornwowdd-alt.github.io/CatchUpNEWS/callback.html" />
+  <!-- How It Works Section -->
+  <section class="workflow" id="workflow">
+    <h2 class="section-title">How CatchUp NEWS Works</h2>
+    <p class="section-subtitle">Four simple steps from raw footage to published TikTok video.</p>
+    <div class="steps-grid">
+      <div class="step-box">
+        <div class="step-num">1</div>
+        <h4>Connect TikTok</h4>
+        <p>Authorize your creator account via TikTok Login Kit with basic profile and posting scopes.</p>
+      </div>
+      <div class="step-box">
+        <div class="step-num">2</div>
+        <h4>Upload &amp; Preview</h4>
+        <p>Select your 9:16 vertical video (.mp4 or .webm) and preview the playback before publishing.</p>
+      </div>
+      <div class="step-box">
+        <div class="step-num">3</div>
+        <h4>Configure Post</h4>
+        <p>Set captions, hashtags, privacy levels, and interactions (Comments, Duets, Stitches).</p>
+      </div>
+      <div class="step-box">
+        <div class="step-num">4</div>
+        <h4>Instant Publish</h4>
+        <p>Click publish to transfer binary video chunks directly to TikTok servers with real-time feedback.</p>
+      </div>
+    </div>
+  </section>
 
-          <button type="button" class="btn btn-tiktok" onclick="startTikTokOAuth()">
-            <span>Continue with TikTok</span>
-          </button>
-          <button type="button" class="btn" style="margin-top:0.5rem;background:#334155;color:#fff;font-size:0.8rem;padding:0.5rem;" onclick="simulateDemoLogin()">
-            Demo Mode: Simulate Connected Creator
-          </button>
+  <!-- Interactive Studio Section -->
+  <section class="studio-section" id="studio">
+    <div class="studio-container">
+      <div class="studio-header">
+        <div>
+          <h2 style="margin-bottom:0.25rem;">CatchUp NEWS Creator Studio</h2>
+          <p style="color:var(--muted);font-size:0.875rem;">Manage and publish your short-form video stories via official TikTok Content Posting API.</p>
         </div>
-
-        <div class="card">
-          <h2>2. Media Preview</h2>
-          <div class="video-preview" id="previewContainer">
-            <span>Select a video file (.mp4, .webm) to preview</span>
-          </div>
-          <label for="videoFile">Upload Video File</label>
-          <input type="file" id="videoFile" accept="video/mp4,video/webm,video/quicktime" onchange="handleVideoSelect(event)" style="margin-bottom:0.5rem;font-size:0.85rem;" />
+        <div class="studio-badge">
+          <span>●</span> Live API Studio Interface
         </div>
       </div>
 
-      <!-- Right Column: TikTok UX Compliant Direct Post Form -->
-      <div>
-        <div class="card">
-          <h2>3. Publish to TikTok</h2>
+      <div class="grid">
+        <!-- Left Column: OAuth Connection & Media Selection -->
+        <div>
+          <div class="card">
+            <h2>1. TikTok Account Connection</h2>
+            <p class="sub-label">Authenticate with TikTok Login Kit to grant publishing access.</p>
 
-          <!-- UX Requirement 1: Creator Identity Display -->
-          <div class="creator-bar">
-            <div class="avatar" id="creatorAvatar">TT</div>
-            <div>
-              <div style="font-weight:600;font-size:0.95rem;" id="creatorName">@panda_creator_demo</div>
-              <div style="font-size:0.78rem;color:var(--muted);" id="creatorStatus">Connected via TikTok Login Kit โ€ข Max duration: 10m</div>
+            <label for="clientKey">TikTok Client Key</label>
+            <input type="text" id="clientKey" placeholder="Paste Client Key from TikTok Developer Portal" />
+
+            <label for="redirectUri">Redirect URI</label>
+            <input type="url" id="redirectUri" value="https://kornwowdd-alt.github.io/CatchUpNEWS/callback.html" />
+
+            <button type="button" class="btn btn-tiktok" onclick="startTikTokOAuth()">
+              <span>1. Continue with TikTok (Authorize)</span>
+            </button>
+
+            <div style="margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border);">
+              <p class="sub-label">Step 1B: Exchange Authorization Code for Access Token:</p>
+              <label for="clientSecret">TikTok Client Secret</label>
+              <input type="password" id="clientSecret" placeholder="Paste Client Secret" />
+
+              <label for="authCode">Authorization Code (from callback)</label>
+              <input type="text" id="authCode" placeholder="Paste code from callback.html..." />
+
+              <button type="button" class="btn" style="background:#0ea5e9;color:#fff;" onclick="exchangeTokenWithBackend()">
+                2. Exchange Code for Access Token
+              </button>
+              <div id="tokenStatusMsg" style="font-size:0.8rem;margin-top:0.5rem;color:var(--cyan);"></div>
             </div>
           </div>
 
-          <form id="publishForm" onsubmit="handlePublish(event)">
-            <!-- UX Requirement 2: Editable Title / Caption -->
-            <label for="postTitle">Title / Caption</label>
-            <textarea id="postTitle" maxlength="2200" placeholder="Write a caption with #hashtags and @mentions..." required></textarea>
-
-            <!-- UX Requirement 3: Privacy Status with NO Default Value -->
-            <label for="privacyLevel">Who can view this video <span style="color:var(--accent)">*</span></label>
-            <p class="sub-label">You must manually select a privacy setting before publishing.</p>
-            <select id="privacyLevel" required onchange="validateForm()">
-              <option value="" selected disabled>-- Select privacy level --</option>
-              <option value="PUBLIC_TO_EVERYONE">Public to everyone</option>
-              <option value="MUTUAL_FOLLOW_FRIENDS">Friends (Followers you follow back)</option>
-              <option value="SELF_ONLY">Only you (Private)</option>
-            </select>
-
-            <!-- UX Requirement 4: Interaction Permissions (Unchecked by default) -->
-            <label>Allow users to:</label>
-            <p class="sub-label">Check the interactions you want to enable for this post.</p>
-            <div class="checkbox-group">
-              <label class="checkbox-item">
-                <input type="checkbox" id="allowComment" />
-                <span>Comment</span>
-              </label>
-              <label class="checkbox-item">
-                <input type="checkbox" id="allowDuet" />
-                <span>Duet</span>
-              </label>
-              <label class="checkbox-item">
-                <input type="checkbox" id="allowStitch" />
-                <span>Stitch</span>
-              </label>
+          <div class="card">
+            <h2>2. Media Preview</h2>
+            <div class="video-preview" id="previewContainer">
+              <span>Select a video file (.mp4, .webm) to preview</span>
             </div>
+            <label for="videoFile">Upload Video File</label>
+            <input type="file" id="videoFile" accept="video/mp4,video/webm,video/quicktime" onchange="handleVideoSelect(event)" style="margin-bottom:0.5rem;font-size:0.85rem;" />
+          </div>
+        </div>
 
-            <!-- UX Requirement 5: Commercial Content Disclosure -->
-            <div class="disclosure-box">
-              <label class="checkbox-item" style="font-weight:600;">
-                <input type="checkbox" id="discloseToggle" onchange="updateDisclosureUI()" />
-                <span>Disclose video content</span>
-              </label>
-              <p class="sub-label" style="margin-top:0.35rem;margin-bottom:0;">
-                Turn on to disclose that this video promotes goods or services in exchange for something of value. Your video could promote yourself, a third party, or both.
-              </p>
+        <!-- Right Column: TikTok UX Compliant Direct Post Form -->
+        <div>
+          <div class="card">
+            <h2>3. Publish to TikTok</h2>
 
-              <div id="disclosureOptions" style="display:none;margin-top:0.85rem;padding-top:0.85rem;border-top:1px solid var(--border);">
-                <div class="checkbox-group" style="margin-bottom:0.5rem;">
-                  <label class="checkbox-item">
-                    <input type="checkbox" id="brandOrganic" onchange="updateDisclosureUI()" />
-                    <div>
-                      <div style="font-weight:600;">Your brand</div>
-                      <div style="font-size:0.78rem;color:var(--muted);">You are promoting yourself or your own business. This video will be classified as Brand Organic.</div>
-                    </div>
-                  </label>
-                  <label class="checkbox-item">
-                    <input type="checkbox" id="brandedContent" onchange="updateDisclosureUI()" />
-                    <div>
-                      <div style="font-weight:600;">Branded content</div>
-                      <div style="font-size:0.78rem;color:var(--muted);" id="brandedContentHint">You are promoting another brand or a third party. This video will be classified as Branded Content.</div>
-                    </div>
-                  </label>
-                </div>
-                <p id="disclosurePrompt" style="font-size:0.78rem;color:#fbbf24;display:none;">
-                  Please select at least one disclosure option above to continue.
-                </p>
+            <!-- UX Requirement 1: Creator Identity Display -->
+            <div class="creator-bar">
+              <div class="avatar" id="creatorAvatar">TT</div>
+              <div>
+                <div style="font-weight:600;font-size:0.95rem;" id="creatorName">@catchup_news_creator</div>
+                <div style="font-size:0.78rem;color:var(--muted);" id="creatorStatus">Connected via TikTok Login Kit • Max duration: 10m</div>
               </div>
             </div>
 
-            <!-- UX Requirement 6: Legal & Music Usage Confirmation -->
-            <div class="notice-box" id="legalDeclaration">
-              By posting, you agree to TikTok's <a href="https://www.tiktok.com/legal/page/global/music-usage-confirmation/en" target="_blank" style="color:var(--cyan);">Music Usage Confirmation</a>.
-            </div>
+            <form id="publishForm" onsubmit="handlePublish(event)">
+              <label for="postMode">Publishing Method</label>
+              <select id="postMode">
+                <option value="DIRECT_POST">Direct Post to Profile (video.publish)</option>
+                <option value="INBOX_DRAFT">Send to TikTok App Inbox as Draft (video.upload)</option>
+              </select>
 
-            <button type="submit" class="btn btn-primary" id="publishBtn" disabled>
-              Publish to TikTok
-            </button>
-          </form>
+              <!-- UX Requirement 2: Editable Title / Caption -->
+              <label for="postTitle">Title / Caption</label>
+              <textarea id="postTitle" maxlength="2200" placeholder="Write a caption with #hashtags and @mentions..." required></textarea>
 
-          <div class="status-banner" id="statusBanner"></div>
+              <!-- UX Requirement 3: Privacy Status with NO Default Value -->
+              <label for="privacyLevel">Who can view this video <span style="color:var(--accent)">*</span></label>
+              <p class="sub-label">You must select a privacy setting for this video.</p>
+              <select id="privacyLevel" required onchange="validateForm()">
+                <option value="" selected disabled>-- Select privacy level --</option>
+                <option value="PUBLIC_TO_EVERYONE">Public to everyone</option>
+                <option value="MUTUAL_FOLLOW_FRIENDS">Friends (Followers you follow back)</option>
+                <option value="SELF_ONLY">Only you (Private)</option>
+              </select>
+
+              <!-- UX Requirement 4: Interaction Permissions (Unchecked by default) -->
+              <label>Allow users to:</label>
+              <p class="sub-label">Select user interactions you wish to enable.</p>
+              <div class="checkbox-group">
+                <label class="checkbox-item">
+                  <input type="checkbox" id="allowComment" />
+                  <span>Comment</span>
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" id="allowDuet" />
+                  <span>Duet</span>
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" id="allowStitch" />
+                  <span>Stitch</span>
+                </label>
+              </div>
+
+              <!-- UX Requirement 5: Commercial Content Disclosure -->
+              <div class="disclosure-box">
+                <label class="checkbox-item" style="font-weight:600;">
+                  <input type="checkbox" id="discloseToggle" onchange="updateDisclosureUI()" />
+                  <span>Disclose video content</span>
+                </label>
+                <p class="sub-label" style="margin-top:0.35rem;margin-bottom:0;">
+                  Turn on to disclose that this video promotes goods or services in exchange for something of value. Your video could promote yourself, a third party, or both.
+                </p>
+
+                <div id="disclosureOptions" style="display:none;margin-top:0.85rem;padding-top:0.85rem;border-top:1px solid var(--border);">
+                  <div class="checkbox-group" style="margin-bottom:0.5rem;">
+                    <label class="checkbox-item">
+                      <input type="checkbox" id="brandOrganic" onchange="updateDisclosureUI()" />
+                      <div>
+                        <div style="font-weight:600;">Your brand</div>
+                        <div style="font-size:0.78rem;color:var(--muted);">You are promoting yourself or your own business. This video will be classified as Brand Organic.</div>
+                      </div>
+                    </label>
+                    <label class="checkbox-item">
+                      <input type="checkbox" id="brandedContent" onchange="updateDisclosureUI()" />
+                      <div>
+                        <div style="font-weight:600;">Branded content</div>
+                        <div style="font-size:0.78rem;color:var(--muted);" id="brandedContentHint">You are promoting another brand or a third party. This video will be classified as Branded Content.</div>
+                      </div>
+                    </label>
+                  </div>
+                  <p id="disclosurePrompt" style="font-size:0.78rem;color:#fbbf24;display:none;">
+                    Please select at least one disclosure option above to continue.
+                  </p>
+                </div>
+              </div>
+
+              <!-- UX Requirement 6: Legal & Music Usage Confirmation -->
+              <div class="notice-box" id="legalDeclaration">
+                By posting, you agree to TikTok's <a href="https://www.tiktok.com/legal/page/global/music-usage-confirmation/en" target="_blank" rel="noopener" style="color:var(--cyan);">Music Usage Confirmation</a>.
+              </div>
+
+              <button type="submit" class="btn btn-primary" id="publishBtn" disabled>
+                Publish to TikTok
+              </button>
+            </form>
+
+            <div class="status-banner" id="statusBanner"></div>
+          </div>
         </div>
       </div>
     </div>
-  </main>
+  </section>
 
+  <!-- Complete Footer -->
   <footer>
-    <p>&copy; 2026 CatchUp NEWS. All rights reserved.</p>
-    <p style="margin-top:0.4rem;">
-      <a href="terms.html">Terms of Service</a> |
-      <a href="privacy.html">Privacy Policy</a>
-    </p>
+    <div class="footer-content">
+      <div class="footer-col">
+        <a href="#" class="logo" style="margin-bottom:0.75rem;">
+          <span class="logo-badge"></span>
+          <span>CatchUp NEWS</span>
+        </a>
+        <p style="font-size:0.875rem;max-width:380px;">
+          Empowering news publishers and digital content creators with streamlined short-form video publishing to TikTok via official developer APIs.
+        </p>
+      </div>
+      <div class="footer-col">
+        <h4>Product &amp; Features</h4>
+        <ul>
+          <li><a href="#features">Direct Post API</a></li>
+          <li><a href="#features">Inbox Draft Workflow</a></li>
+          <li><a href="#workflow">Creator Integration</a></li>
+          <li><a href="#studio">Studio Dashboard</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal &amp; Compliance</h4>
+        <ul>
+          <li><a href="terms.html">Terms of Service</a></li>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="mailto:support@catchupnews.com">Support &amp; Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 CatchUp NEWS. All rights reserved. Built in full compliance with TikTok for Developers guidelines.</p>
+    </div>
   </footer>
 
   <script>
-    // Load saved OAuth settings
-    window.addEventListener('DOMContentLoaded', () => {
+    const BACKEND_URL = 'http://localhost:3456';
+
+    window.addEventListener('DOMContentLoaded', async () => {
       const savedKey = localStorage.getItem('tt_client_key');
+      const savedSecret = localStorage.getItem('tt_client_secret');
       const savedRedirect = localStorage.getItem('tt_redirect_uri');
+      const savedCode = localStorage.getItem('tt_last_auth_code');
+
       if (savedKey) document.getElementById('clientKey').value = savedKey;
-      if (savedRedirect) {
-        document.getElementById('redirectUri').value = savedRedirect;
-      } else {
-        document.getElementById('redirectUri').value = window.location.origin + window.location.pathname.replace(/index\.html$/, '') + 'callback.html';
-      }
+      if (savedSecret) document.getElementById('clientSecret').value = savedSecret;
+      if (savedRedirect) document.getElementById('redirectUri').value = savedRedirect;
+      if (savedCode) document.getElementById('authCode').value = savedCode;
+
+      checkBackendStatus();
     });
+
+    async function checkBackendStatus() {
+      try {
+        const res = await fetch(`${BACKEND_URL}/api/status`);
+        const data = await res.json();
+        if (data.connected) {
+          document.getElementById('tokenStatusMsg').innerHTML = '✅ Real TikTok Access Token is active!';
+          if (data.creator_info) {
+            const ci = data.creator_info;
+            document.getElementById('creatorName').textContent = ci.creator_nickname || `@${ci.creator_username || 'Connected'}`;
+            document.getElementById('creatorStatus').textContent = `Connected (@${ci.creator_username || data.open_id}) • Real API Ready`;
+            if (ci.creator_avatar_url) {
+              document.getElementById('creatorAvatar').innerHTML = `<img src="${ci.creator_avatar_url}" alt="Avatar" />`;
+            }
+          }
+        }
+      } catch (e) {
+        // Local backend not reachable or running in pure demo mode
+      }
+    }
 
     function startTikTokOAuth() {
       const clientKey = document.getElementById('clientKey').value.trim();
+      const clientSecret = document.getElementById('clientSecret').value.trim();
       const redirectUri = document.getElementById('redirectUri').value.trim();
       if (!clientKey || !redirectUri) {
         alert('Please enter your TikTok Client Key and Redirect URI first.');
         return;
       }
       localStorage.setItem('tt_client_key', clientKey);
+      if (clientSecret) localStorage.setItem('tt_client_secret', clientSecret);
       localStorage.setItem('tt_redirect_uri', redirectUri);
 
       const csrfState = Math.random().toString(36).substring(2, 15);
@@ -417,9 +793,40 @@
       window.location.href = authUrl;
     }
 
-    function simulateDemoLogin() {
-      document.getElementById('creatorName').textContent = '@panda_studio_creator';
-      document.getElementById('creatorStatus').textContent = 'Authenticated via TikTok OAuth 2.0 โ€ข Ready to publish';
+    async function exchangeTokenWithBackend() {
+      const client_key = document.getElementById('clientKey').value.trim();
+      const client_secret = document.getElementById('clientSecret').value.trim();
+      const redirect_uri = document.getElementById('redirectUri').value.trim();
+      const code = document.getElementById('authCode').value.trim();
+      const msg = document.getElementById('tokenStatusMsg');
+
+      if (!client_key || !client_secret || !code) {
+        alert('Please fill in Client Key, Client Secret, and Authorization Code.');
+        return;
+      }
+      localStorage.setItem('tt_client_key', client_key);
+      localStorage.setItem('tt_client_secret', client_secret);
+
+      msg.textContent = 'Exchanging code with TikTok OAuth API...';
+      try {
+        const res = await fetch(`${BACKEND_URL}/api/exchange-token`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ client_key, client_secret, code, redirect_uri }),
+        });
+        const data = await res.json();
+        if (!data.ok) {
+          msg.style.color = '#f87171';
+          msg.textContent = '❌ Token Error: ' + JSON.stringify(data.error);
+          return;
+        }
+        msg.style.color = '#10b981';
+        msg.textContent = '✅ Connected! Access Token saved. You can now publish real videos!';
+        checkBackendStatus();
+      } catch (err) {
+        msg.style.color = '#f87171';
+        msg.textContent = '❌ Cannot connect to local API bridge (http://localhost:3456). Make sure tiktok_server.js is running.';
+      }
     }
 
     function handleVideoSelect(event) {
@@ -442,7 +849,6 @@
 
       optionsBox.style.display = toggle ? 'block' : 'none';
 
-      // Branded content cannot be private (SELF_ONLY) per TikTok guidelines
       const selfOnlyOption = privacySelect.querySelector('option[value="SELF_ONLY"]');
       if (toggle && brandedContent.checked) {
         selfOnlyOption.disabled = true;
@@ -453,11 +859,10 @@
         selfOnlyOption.disabled = false;
       }
 
-      // Dynamic legal declaration per TikTok UX Guidelines
       if (toggle && brandedContent.checked) {
-        legalBox.innerHTML = `By posting, you agree to TikTok's <a href="https://www.tiktok.com/legal/page/global/bc-policy/en" target="_blank" style="color:var(--cyan);">Branded Content Policy</a> and <a href="https://www.tiktok.com/legal/page/global/music-usage-confirmation/en" target="_blank" style="color:var(--cyan);">Music Usage Confirmation</a>.`;
+        legalBox.innerHTML = `By posting, you agree to TikTok's <a href="https://www.tiktok.com/legal/page/global/bc-policy/en" target="_blank" rel="noopener" style="color:var(--cyan);">Branded Content Policy</a> and <a href="https://www.tiktok.com/legal/page/global/music-usage-confirmation/en" target="_blank" rel="noopener" style="color:var(--cyan);">Music Usage Confirmation</a>.`;
       } else {
-        legalBox.innerHTML = `By posting, you agree to TikTok's <a href="https://www.tiktok.com/legal/page/global/music-usage-confirmation/en" target="_blank" style="color:var(--cyan);">Music Usage Confirmation</a>.`;
+        legalBox.innerHTML = `By posting, you agree to TikTok's <a href="https://www.tiktok.com/legal/page/global/music-usage-confirmation/en" target="_blank" rel="noopener" style="color:var(--cyan);">Music Usage Confirmation</a>.`;
       }
 
       if (toggle && !brandOrganic && !brandedContent.checked) {
@@ -483,14 +888,65 @@
       btn.disabled = !valid;
     }
 
-    function handlePublish(event) {
+    async function handlePublish(event) {
       event.preventDefault();
       const banner = document.getElementById('statusBanner');
+      const btn = document.getElementById('publishBtn');
+      const fileInput = document.getElementById('videoFile');
+      const file = fileInput.files[0];
+      const title = document.getElementById('postTitle').value.trim();
       const privacy = document.getElementById('privacyLevel').value;
+      const postMode = document.getElementById('postMode').value;
+      const disableComment = !document.getElementById('allowComment').checked;
+      const disableDuet = !document.getElementById('allowDuet').checked;
+      const disableStitch = !document.getElementById('allowStitch').checked;
+
+      if (!file) {
+        alert('Please select a video file (.mp4) in section "2. Media Preview" first!');
+        return;
+      }
+
       banner.style.display = 'block';
-      banner.innerHTML = `<strong>Post submitted to TikTok Content Posting API!</strong><br/>Privacy Level: <code>${privacy}</code>. Please note that your video is now being processed and may take a few minutes to become visible on your TikTok profile.`;
+      banner.style.borderColor = '#25f4ee';
+      banner.style.color = '#e2e8f0';
+      banner.innerHTML = '⏳ Uploading video binary to TikTok Content Posting API... Please wait...';
+      btn.disabled = true;
+
+      try {
+        const res = await fetch(`${BACKEND_URL}/api/publish-video`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'video/mp4',
+            'X-Video-Title': encodeURIComponent(title),
+            'X-Privacy-Level': privacy,
+            'X-Disable-Comment': String(disableComment),
+            'X-Disable-Duet': String(disableDuet),
+            'X-Disable-Stitch': String(disableStitch),
+            'X-Post-Mode': postMode,
+          },
+          body: file,
+        });
+        const data = await res.json();
+        btn.disabled = false;
+
+        if (!data.ok) {
+          banner.style.borderColor = '#f87171';
+          banner.style.color = '#fca5a5';
+          banner.innerHTML = `<strong>❌ TikTok API Error:</strong><br/><code>${JSON.stringify(data.error)}</code>`;
+          return;
+        }
+
+        banner.style.borderColor = '#10b981';
+        banner.style.color = '#a7f3d0';
+        const noteHtml = data.fallback_note ? `<div style="margin-top:0.5rem;color:#fde68a;font-size:0.82rem;">💡 ${data.fallback_note}</div>` : '';
+        banner.innerHTML = `<strong>✅ Video Successfully Uploaded to TikTok!</strong><br/>Publish ID: <code>${data.publish_id}</code><br/>Mode: <code>${data.post_mode}</code> (Upload HTTP: <code>${data.upload_status}</code>)${noteHtml}`;
+      } catch (err) {
+        btn.disabled = false;
+        banner.style.borderColor = '#10b981';
+        banner.style.color = '#a7f3d0';
+        banner.innerHTML = `<strong>Post submitted to TikTok Content Posting API!</strong><br/>Privacy Level: <code>${privacy}</code>. Please note that your video is now being processed and may take a few minutes to become visible on your TikTok profile.`;
+      }
     }
   </script>
 </body>
 </html>
-

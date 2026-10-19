@@ -1,71 +1,154 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Terms of Service โ€” CatchUp NEWS</title>
+  <title>Terms of Service — CatchUp NEWS</title>
   <style>
+    :root {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --border: #334155;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --accent: #fe2c55;
+      --cyan: #25f4ee;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background-color: #0f172a;
-      color: #f8fafc;
+      background-color: var(--bg);
+      color: var(--text);
       line-height: 1.7;
-      margin: 0;
-      padding: 0;
     }
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 2rem;
+      background: rgba(30, 41, 59, 0.85);
+      backdrop-filter: blur(8px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .logo-badge {
+      background: linear-gradient(135deg, var(--cyan), var(--accent));
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      display: inline-block;
+    }
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      margin-left: 1.5rem;
+      font-size: 0.9rem;
+      transition: color 0.15s;
+    }
+    nav a:hover { color: var(--text); }
     .container {
-      max-width: 800px;
+      max-width: 860px;
       margin: 3rem auto;
-      padding: 2rem;
-      background: #1e293b;
-      border: 1px solid #334155;
+      padding: 2.5rem;
+      background: var(--card);
+      border: 1px solid var(--border);
       border-radius: 12px;
     }
-    h1 { font-size: 1.75rem; margin-bottom: 0.5rem; color: #ffffff; }
-    h2 { font-size: 1.2rem; margin-top: 1.75rem; color: #25f4ee; }
-    p, li { color: #cbd5e1; font-size: 0.95rem; }
-    a { color: #25f4ee; text-decoration: none; }
+    h1 { font-size: 2rem; margin-bottom: 0.5rem; color: #ffffff; }
+    h2 { font-size: 1.25rem; margin-top: 2rem; margin-bottom: 0.75rem; color: var(--cyan); border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+    p, li { color: #cbd5e1; font-size: 0.95rem; margin-bottom: 0.75rem; }
+    ul { padding-left: 1.5rem; margin-bottom: 1rem; }
+    a { color: var(--cyan); text-decoration: none; }
     a:hover { text-decoration: underline; }
-    .meta { color: #94a3b8; font-size: 0.85rem; margin-bottom: 2rem; }
+    .meta { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; }
+    footer {
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 4rem;
+    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <p><a href="index.html">&larr; Back to CatchUp NEWS</a></p>
-    <h1>Terms of Service</h1>
-    <p class="meta">Effective Date: October 12, 2026</p>
+  <header>
+    <a href="index.html" class="logo">
+      <span class="logo-badge"></span>
+      <span>CatchUp NEWS</span>
+    </a>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="index.html#features">Features</a>
+      <a href="terms.html" style="color:var(--text);font-weight:600;">Terms of Service</a>
+      <a href="privacy.html">Privacy Policy</a>
+    </nav>
+  </header>
 
-    <p>Welcome to <strong>CatchUp NEWS</strong> ("we," "our," or "us"). By accessing or using our web application and services, you agree to be bound by these Terms of Service.</p>
+  <div class="container">
+    <h1>Terms of Service</h1>
+    <p class="meta">Last Updated: October 19, 2026 | Effective Date: October 12, 2026</p>
+
+    <p>Welcome to <strong>CatchUp NEWS</strong> ("we," "our," or "us"). By accessing or using the CatchUp NEWS web application, website, and publishing services (collectively, the "Service"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, please do not use the Service.</p>
 
     <h2>1. Description of Service</h2>
-    <p>CatchUp NEWS provides a content management and publishing interface that enables content creators to authenticate their TikTok accounts via TikTok Login Kit and publish or upload videos and media using the official TikTok Content Posting API.</p>
+    <p>CatchUp NEWS is a modern web-based content management and video publishing platform designed for digital news publishers and content creators. Our Service integrates with third-party platforms, specifically the official TikTok for Developers platform (including TikTok Login Kit and Content Posting API), allowing authorized creators to authenticate their accounts, manage video metadata, configure privacy levels, and upload or publish short-form video content directly to their TikTok accounts.</p>
 
     <h2>2. User Accounts and Authorization</h2>
     <ul>
-      <li>You must be the authorized owner of the TikTok account you connect to CatchUp NEWS.</li>
-      <li>Authentication is handled securely through TikTok's official OAuth 2.0 authorization flow. We never request or store your TikTok password.</li>
-      <li>You may revoke our application's access to your TikTok account at any time through your TikTok mobile or web application settings.</li>
+      <li><strong>Account Ownership:</strong> You represent and warrant that you are the lawful owner or authorized administrator of any TikTok account you connect to the Service.</li>
+      <li><strong>OAuth 2.0 Authentication:</strong> Connection to TikTok is handled exclusively through TikTok's official OAuth 2.0 authorization framework. We do not solicit, collect, or store your TikTok account passwords.</li>
+      <li><strong>Revocation:</strong> You retain complete control over your account connection and may revoke CatchUp NEWS's access at any time through your TikTok application settings under <em>Settings and Privacy &rarr; Security and Permissions &rarr; Apps and Services</em>.</li>
     </ul>
 
-    <h2>3. Content Responsibility &amp; TikTok Compliance</h2>
+    <h2>3. Content Standards and Compliance</h2>
     <ul>
-      <li>You retain full ownership and responsibility for all video, photo, audio, and text content that you upload or publish through our service.</li>
-      <li>By publishing content through CatchUp NEWS, you agree to comply with <a href="https://www.tiktok.com/community-guidelines" target="_blank">TikTok's Community Guidelines</a>, <a href="https://www.tiktok.com/legal/page/row/terms-of-service/en" target="_blank">TikTok's Terms of Service</a>, <a href="https://www.tiktok.com/legal/page/global/bc-policy/en" target="_blank">TikTok's Branded Content Policy</a>, and <a href="https://www.tiktok.com/legal/page/global/music-usage-confirmation/en" target="_blank">TikTok's Music Usage Confirmation</a>.</li>
-      <li>You agree not to use the service for unauthorized spam, automated abuse, or copyright infringement.</li>
+      <li><strong>User Ownership:</strong> You retain full intellectual property ownership of all videos, audio files, images, captions, and text uploaded through CatchUp NEWS.</li>
+      <li><strong>TikTok Platform Guidelines:</strong> When publishing content through our Service, you agree to strictly adhere to all applicable TikTok terms and community standards, including:
+        <ul>
+          <li><a href="https://www.tiktok.com/community-guidelines" target="_blank" rel="noopener">TikTok Community Guidelines</a></li>
+          <li><a href="https://www.tiktok.com/legal/page/row/terms-of-service/en" target="_blank" rel="noopener">TikTok Terms of Service</a></li>
+          <li><a href="https://www.tiktok.com/legal/page/global/bc-policy/en" target="_blank" rel="noopener">TikTok Branded Content Policy</a></li>
+          <li><a href="https://www.tiktok.com/legal/page/global/music-usage-confirmation/en" target="_blank" rel="noopener">TikTok Music Usage Confirmation</a></li>
+        </ul>
+      </li>
+      <li><strong>Prohibited Use:</strong> You may not use CatchUp NEWS to transmit deceptive information, spam, copyright-infringing media, malicious code, or content that violates any applicable local or international laws.</li>
     </ul>
 
-    <h2>4. Disclaimer of Warranties</h2>
-    <p>The service is provided on an "AS IS" and "AS AVAILABLE" basis without warranties of any kind. We do not guarantee uninterrupted availability of third-party APIs including the TikTok API.</p>
+    <h2>4. Service Availability and Modifications</h2>
+    <p>We strive to provide reliable and continuous access to the Service. However, CatchUp NEWS relies on third-party APIs (including TikTok for Developers) which may experience maintenance, rate limitations, or service interruptions beyond our control. We reserve the right to modify, suspend, or discontinue any feature of the Service at any time without liability.</p>
 
-    <h2>5. Limitation of Liability</h2>
-    <p>To the maximum extent permitted by applicable law, CatchUp NEWS shall not be liable for any indirect, incidental, or consequential damages arising out of your use of the service.</p>
+    <h2>5. Disclaimers and Limitation of Liability</h2>
+    <p>THE SERVICE IS PROVIDED ON AN "AS IS" AND "AS AVAILABLE" BASIS WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED. TO THE FULLEST EXTENT PERMISSIBLE BY APPLICABLE LAW, CATCHUP NEWS AND ITS OPERATORS DISCLAIM ALL WARRANTIES, INCLUDING MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT. IN NO EVENT SHALL CATCHUP NEWS BE LIABLE FOR ANY INDIRECT, INCIDENTAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES ARISING FROM YOUR USE OF THE SERVICE.</p>
 
-    <h2>6. Changes to These Terms</h2>
-    <p>We may update these Terms of Service from time to time. Continued use of the service after changes constitutes acceptance of the updated terms.</p>
+    <h2>6. Privacy Policy</h2>
+    <p>Your use of the Service is also governed by our <a href="privacy.html">Privacy Policy</a>, which describes how we collect, handle, and protect your information when utilizing TikTok API integrations.</p>
 
-    <h2>7. Contact Information</h2>
-    <p>If you have questions regarding these Terms of Service, please contact the administrator via our official repository or support channel.</p>
+    <h2>7. Changes to Terms</h2>
+    <p>We reserve the right to revise these Terms of Service at any time. Any changes will be posted on this page with an updated "Last Updated" date. Continued use of CatchUp NEWS after modifications signifies your acceptance of the updated terms.</p>
+
+    <h2>8. Contact Information</h2>
+    <p>If you have any questions, feedback, or legal inquiries regarding these Terms of Service, please contact us at:</p>
+    <p><strong>CatchUp NEWS Support</strong><br />
+    Email: <a href="mailto:support@catchupnews.com">support@catchupnews.com</a><br />
+    Website: <a href="https://kornwowdd-alt.github.io/CatchUpNEWS/">https://kornwowdd-alt.github.io/CatchUpNEWS/</a></p>
   </div>
+
+  <footer>
+    <p>&copy; 2026 CatchUp NEWS. All rights reserved.</p>
+    <p style="margin-top:0.5rem;">
+      <a href="index.html">Home</a> |
+      <a href="terms.html">Terms of Service</a> |
+      <a href="privacy.html">Privacy Policy</a>
+    </p>
+  </footer>
 </body>
 </html>
-
