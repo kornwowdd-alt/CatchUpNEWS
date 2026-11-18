@@ -457,6 +457,77 @@
       text-align: center;
       font-size: 0.85rem;
     }
+    /* Scope / Product Badges (shows reviewers which TikTok product & scope each step uses) */
+    .scope-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 0.85rem;
+    }
+    .scope-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 9999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      letter-spacing: 0.2px;
+      white-space: nowrap;
+    }
+    .scope-badge.product {
+      background: rgba(254, 44, 85, 0.12);
+      border: 1px solid rgba(254, 44, 85, 0.55);
+      color: #fda4af;
+    }
+    .scope-badge.scope {
+      background: rgba(37, 244, 238, 0.1);
+      border: 1px solid rgba(37, 244, 238, 0.5);
+      color: var(--cyan);
+    }
+    .scope-badge.inactive {
+      opacity: 0.35;
+      filter: grayscale(1);
+    }
+    .scope-legend {
+      background: #0b1120;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.85rem 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .scope-legend-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      margin-bottom: 0.55rem;
+    }
+    .scope-legend-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 0.5rem 1rem;
+    }
+    .scope-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      color: #cbd5e1;
+    }
+    .scope-indicator {
+      border-radius: 8px;
+      padding: 0.75rem 0.9rem;
+      margin-bottom: 1rem;
+      font-size: 0.8rem;
+      line-height: 1.5;
+      border: 1px solid rgba(37, 244, 238, 0.45);
+      background: rgba(37, 244, 238, 0.06);
+      color: #cbd5e1;
+    }
+    .scope-indicator strong { color: #fff; }
   </style>
 </head>
 <body>
@@ -562,12 +633,45 @@
         </div>
       </div>
 
+      <!-- Legend: which TikTok products & scopes this Studio uses, and where -->
+      <div class="scope-legend">
+        <div class="scope-legend-title">TikTok Products &amp; Scopes Used in This Studio</div>
+        <div class="scope-legend-grid">
+          <div class="scope-legend-item">
+            <span class="scope-badge product">Login Kit</span>
+            <span>Step 1 — Sign in with TikTok (OAuth 2.0)</span>
+          </div>
+          <div class="scope-legend-item">
+            <span class="scope-badge scope">user.info.basic</span>
+            <span>Step 1 &amp; 3 — Show creator name &amp; avatar</span>
+          </div>
+          <div class="scope-legend-item">
+            <span class="scope-badge product">Content Posting API</span>
+            <span>Step 3 — Upload &amp; publish video</span>
+          </div>
+          <div class="scope-legend-item">
+            <span class="scope-badge scope">video.publish</span>
+            <span>Step 3 — Direct Post to creator profile</span>
+          </div>
+          <div class="scope-legend-item">
+            <span class="scope-badge scope">video.upload</span>
+            <span>Step 3 — Send draft to TikTok app inbox</span>
+          </div>
+        </div>
+      </div>
+
       <div class="grid">
         <!-- Left Column: OAuth Connection & Media Selection -->
         <div>
           <div class="card">
             <h2>1. TikTok Account Connection</h2>
-            <p class="sub-label">Authenticate with TikTok Login Kit to grant publishing access.</p>
+            <div class="scope-row">
+              <span class="scope-badge product">Login Kit</span>
+              <span class="scope-badge scope">user.info.basic</span>
+              <span class="scope-badge scope">video.publish</span>
+              <span class="scope-badge scope">video.upload</span>
+            </div>
+            <p class="sub-label">Authenticate with TikTok Login Kit. The TikTok consent screen will ask you to grant the scopes shown above.</p>
 
             <label for="clientKey">TikTok Client Key</label>
             <input type="text" id="clientKey" placeholder="Paste Client Key from TikTok Developer Portal" />
@@ -596,6 +700,7 @@
 
           <div class="card">
             <h2>2. Media Preview</h2>
+            <p class="sub-label">Local preview only — no TikTok scope is used in this step.</p>
             <div class="video-preview" id="previewContainer">
               <span>Select a video file (.mp4, .webm) to preview</span>
             </div>
@@ -608,8 +713,16 @@
         <div>
           <div class="card">
             <h2>3. Publish to TikTok</h2>
+            <div class="scope-row">
+              <span class="scope-badge product">Content Posting API</span>
+              <span class="scope-badge scope" id="badgePublish">video.publish</span>
+              <span class="scope-badge scope inactive" id="badgeUpload">video.upload</span>
+            </div>
 
             <!-- UX Requirement 1: Creator Identity Display -->
+            <div style="font-size:0.72rem;color:var(--muted);margin-bottom:0.35rem;">
+              Connected creator — data provided by <span class="scope-badge scope" style="font-size:0.66rem;padding:0.1rem 0.45rem;">user.info.basic</span>
+            </div>
             <div class="creator-bar">
               <div class="avatar" id="creatorAvatar">TT</div>
               <div>
@@ -620,10 +733,11 @@
 
             <form id="publishForm" onsubmit="handlePublish(event)">
               <label for="postMode">Publishing Method</label>
-              <select id="postMode">
+              <select id="postMode" onchange="updateScopeIndicator()">
                 <option value="DIRECT_POST">Direct Post to Profile (video.publish)</option>
                 <option value="INBOX_DRAFT">Send to TikTok App Inbox as Draft (video.upload)</option>
               </select>
+              <div class="scope-indicator" id="scopeIndicator"></div>
 
               <!-- UX Requirement 2: Editable Title / Caption -->
               <label for="postTitle">Title / Caption</label>
@@ -756,8 +870,30 @@
       if (savedRedirect) document.getElementById('redirectUri').value = savedRedirect;
       if (savedCode) document.getElementById('authCode').value = savedCode;
 
+      updateScopeIndicator();
       checkBackendStatus();
     });
+
+    // Shows reviewers exactly which Content Posting API scope & endpoint the selected method uses
+    function updateScopeIndicator() {
+      const mode = document.getElementById('postMode').value;
+      const indicator = document.getElementById('scopeIndicator');
+      const badgePublish = document.getElementById('badgePublish');
+      const badgeUpload = document.getElementById('badgeUpload');
+      const btn = document.getElementById('publishBtn');
+
+      if (mode === 'INBOX_DRAFT') {
+        badgePublish.classList.add('inactive');
+        badgeUpload.classList.remove('inactive');
+        indicator.innerHTML = '<strong>Scope in use: <code>video.upload</code></strong> (Content Posting API — Upload to Inbox)<br/>Endpoint: <code>POST /v2/post/publish/inbox/video/init/</code><br/>The video is sent to the creator\'s TikTok app inbox as a draft. The creator opens the notification in the TikTok app to edit and post it.';
+        btn.textContent = 'Send to TikTok Inbox (video.upload)';
+      } else {
+        badgeUpload.classList.add('inactive');
+        badgePublish.classList.remove('inactive');
+        indicator.innerHTML = '<strong>Scope in use: <code>video.publish</code></strong> (Content Posting API — Direct Post)<br/>Endpoint: <code>POST /v2/post/publish/video/init/</code><br/>The video is published directly to the creator\'s TikTok profile using the caption, privacy level and interaction settings below.';
+        btn.textContent = 'Publish to TikTok (video.publish)';
+      }
+    }
 
     async function checkBackendStatus() {
       try {
@@ -768,7 +904,7 @@
           if (data.creator_info) {
             const ci = data.creator_info;
             document.getElementById('creatorName').textContent = ci.creator_nickname || `@${ci.creator_username || 'Connected'}`;
-            document.getElementById('creatorStatus').textContent = `Connected (@${ci.creator_username || data.open_id}) • Real API Ready`;
+            document.getElementById('creatorStatus').textContent = `@${ci.creator_username || data.open_id} • Loaded via user.info.basic`;
             if (ci.creator_avatar_url) {
               document.getElementById('creatorAvatar').innerHTML = `<img src="${ci.creator_avatar_url}" alt="Avatar" />`;
             }
@@ -946,12 +1082,16 @@
         banner.style.borderColor = '#10b981';
         banner.style.color = '#a7f3d0';
         const noteHtml = data.fallback_note ? `<div style="margin-top:0.5rem;color:#fde68a;font-size:0.82rem;">💡 ${data.fallback_note}</div>` : '';
-        banner.innerHTML = `<strong>✅ Video Successfully Uploaded to TikTok!</strong><br/>Publish ID: <code>${data.publish_id}</code><br/>Mode: <code>${data.post_mode}</code> (Upload HTTP: <code>${data.upload_status}</code>)${noteHtml}`;
+        const usedScope = data.post_mode === 'INBOX_DRAFT' ? 'video.upload' : 'video.publish';
+        const whereToCheck = data.post_mode === 'INBOX_DRAFT'
+          ? 'Open the TikTok app → Inbox → System notifications to edit and post the draft.'
+          : 'Open the TikTok app → Profile to see the published video.';
+        banner.innerHTML = `<strong>✅ Video Successfully Uploaded to TikTok!</strong><br/>Scope used: <code>${usedScope}</code><br/>Publish ID: <code>${data.publish_id}</code><br/>Mode: <code>${data.post_mode}</code> (Upload HTTP: <code>${data.upload_status}</code>)<br/>${whereToCheck}${noteHtml}`;
       } catch (err) {
         btn.disabled = false;
-        banner.style.borderColor = '#10b981';
-        banner.style.color = '#a7f3d0';
-        banner.innerHTML = `<strong>Post submitted to TikTok Content Posting API!</strong><br/>Privacy Level: <code>${privacy}</code>. Please note that your video is now being processed and may take a few minutes to become visible on your TikTok profile.`;
+        banner.style.borderColor = '#f87171';
+        banner.style.color = '#fca5a5';
+        banner.innerHTML = `<strong>❌ Could not reach the CatchUp NEWS publishing server.</strong><br/>The video was not sent to TikTok. Please make sure the publishing server is running and try again.`;
       }
     }
   </script>
